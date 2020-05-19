@@ -7,8 +7,6 @@
 #include <uavcan_stm32h7/build_config.hpp>
 #include <uavcan/driver/system_clock.hpp>
 
-#define STM32_FDCANCLK STM32_PCLK1_FREQUENCY
-
 namespace uavcan_stm32h7
 {
 

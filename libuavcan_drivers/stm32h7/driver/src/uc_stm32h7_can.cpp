@@ -335,7 +335,7 @@ int CanIface::computeTimings(const uavcan::uint32_t target_bitrate, Timings& out
     }
 
     UAVCAN_STM32H7_LOG("Timings: quanta/bit: %d, sample point location: %.1f%%",
-                     int(1 + solution.bs1 + solution.bs2), float(solution.sample_point_permill) / 10.F);
+                     int(1 + solution.bs1 + solution.bs2), double(solution.sample_point_permill) / 10.);
 
     out_timings.prescaler = uavcan::uint16_t(prescaler - 1U);
     out_timings.sjw = 0;                                        // Which means one
@@ -898,6 +898,7 @@ int CanDriver::init(const uavcan::uint32_t bitrate, const CanIface::OperatingMod
         ifaces[0] = UAVCAN_NULLPTR;
         goto fail;
     }
+    if_int_to_gl_index_[num_ifaces_++] = 0;
 
     /*
      * CAN2
@@ -911,6 +912,7 @@ int CanDriver::init(const uavcan::uint32_t bitrate, const CanIface::OperatingMod
         ifaces[1] = UAVCAN_NULLPTR;
         goto fail;
     }
+    if_int_to_gl_index_[num_ifaces_++] = 1;
 #endif
 
     UAVCAN_STM32H7_LOG("CAN drv init OK");
@@ -1033,7 +1035,7 @@ int CanDriver::init(const uavcan::uint32_t bitrate, const CanIface::OperatingMod
 
     if_int_to_gl_index_[num_ifaces_++] = can_number;
 
-    UAVCAN_STM32H7_LOG("CAN drv init OK");
+    UAVCAN_STM32H7_LOG("CAN drv init OK; %d ifaces", num_ifaces_);
     UAVCAN_ASSERT(res >= 0);
     return res;
 
