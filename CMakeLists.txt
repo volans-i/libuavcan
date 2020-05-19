@@ -19,7 +19,7 @@ set(opts
     "CMAKE_BUILD_TYPE:STRING:RelWithDebInfo:Debug Release RelWithDebInfo MinSizeRel:Build type."
     "CMAKE_CXX_FLAGS:STRING:::C++ flags."
     "CMAKE_C_FLAGS:STRING:::C flags."
-    "UAVCAN_PLATFORM:STRING:generic:generic kinetis linux stm32:Platform."
+    "UAVCAN_PLATFORM:STRING:generic:generic kinetis linux stm32 stm32h7:Platform."
     "CONTINUOUS_INTEGRATION_BUILD:BOOL:OFF::Disable error redirection and timing tests"
     "UAVCAN_CMAKE_VERBOSE:BOOL:OFF::Verbose CMake configure output"
     )
@@ -115,6 +115,10 @@ if (${UAVCAN_PLATFORM} STREQUAL "linux")
     message(STATUS "Adding UAVCAN Linux platform driver")
     add_subdirectory(libuavcan_drivers/posix)
     add_subdirectory(libuavcan_drivers/linux)
+elseif(${UAVCAN_PLATFORM} STREQUAL "stm32h7")
+    message(STATUS "Adding UAVCAN STM32H7 platform driver")
+    add_subdirectory(libuavcan_drivers/posix)
+    add_subdirectory(libuavcan_drivers/stm32h7/driver)
 elseif(${UAVCAN_PLATFORM} STREQUAL "stm32")
     message(STATUS "Adding UAVCAN STM32 platform driver")
     add_subdirectory(libuavcan_drivers/posix)
